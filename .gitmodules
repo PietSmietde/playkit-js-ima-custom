@@ -1,0 +1,3 @@
+[submodule "playkit-js-ima"]
+	path = playkit-js-ima
+	url = git@github.com:kaltura/playkit-js-ima.git
