@@ -9,3 +9,4 @@ rm -Rf dist/*
 mv playkit-js-ima/dist .
 
 git submodule foreach --recursive git reset --hard
+git submodule foreach --recursive git clean -f -d
