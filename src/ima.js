@@ -45,12 +45,15 @@ class CustomIma extends BaseImaPlugin {
    * @memberof Ima
    */
   playAdNow(adPod: KPAdPod): void {
-    if (Array.isArray(adPod) && !(this.isAdPlaying() || this._playAdByConfig() || !this._adBreakPlayableByConfig(adPod))) {
-      this._playAdBreak(adPod);
+    if (!this._adBreakPlayableByConfig(adPod)) {
+      this.logger.debug('Not playing ad now because config callback denied');
+      return;
     }
+
+    super.playAdNow(adPod);
   }
 
-  _adBreakPlayableByConfig(adPod: PKAdPod): boolean {
+  _adBreakPlayableByConfig(adPod: ?PKAdPod): boolean {
     return this.config.adBreakPlayable(adPod);
   }
 
@@ -64,10 +67,6 @@ class CustomIma extends BaseImaPlugin {
    * @memberof Ima
    */
   _requestAds(vastUrl: ?string, vastResponse: ?string): void {
-    if (!this._playAdByConfig()) {
-      return;
-    }
-
     this.logger.debug('Request ads', vastUrl);
 
     let adTagUrl = vastUrl || this.config.adTagUrl;
