@@ -32,8 +32,27 @@ class CustomIma extends BaseImaPlugin {
     aps: {
       enabled: false,
       fetchBids: adTagUrl => new Promise(resolve => resolve(adTagUrl))
-    }
+    },
+    adBreakPlayable: () => true
   };
+
+  /**
+   * Plays ad on demand
+   * @param {KPAdPod} adPod - The ad pod to play.
+   * @returns {void}
+   * @public
+   * @instance
+   * @memberof Ima
+   */
+  playAdNow(adPod: KPAdPod): void {
+    if (Array.isArray(adPod) && !(this.isAdPlaying() || this._playAdByConfig() || this._adBreakPlayableByConfig(adPod))) {
+      this._playAdBreak(adPod);
+    }
+  }
+
+  _adBreakPlayableByConfig(adPod: PKAdPod): boolean {
+    return this.config.adBreakPlayable(adPod);
+  }
 
   /**
    * Requests the ads from the ads loader.
