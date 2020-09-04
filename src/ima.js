@@ -45,7 +45,7 @@ class CustomIma extends BaseImaPlugin {
    * @memberof Ima
    */
   playAdNow(adPod: KPAdPod): void {
-    if (Array.isArray(adPod) && !(this.isAdPlaying() || this._playAdByConfig() || this._adBreakPlayableByConfig(adPod))) {
+    if (Array.isArray(adPod) && !(this.isAdPlaying() || this._playAdByConfig() || !this._adBreakPlayableByConfig(adPod))) {
       this._playAdBreak(adPod);
     }
   }
