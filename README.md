@@ -16,3 +16,9 @@ sh scripts/build.sh
 git submodule foreach --recursive git reset --hard
 git submodule foreach --recursive git clean -f -d
 ````
+
+## Update submodule
+
+```
+git submodule update --remote
+```
