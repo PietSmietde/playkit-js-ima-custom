@@ -1,7 +1,10 @@
+git submodule update --recursive --remote
+
 cp ./src/ima.js ./playkit-js-ima/src/ima-custom.js
 cp ./src/index.js ./playkit-js-ima/src/index.js
 
 cd playkit-js-ima
+yarn install
 yarn build
 cd ..
 
