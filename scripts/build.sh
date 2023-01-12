@@ -1,4 +1,9 @@
-git submodule update --recursive --remote
+# Reset
+#  git submodule deinit -f .
+#  git submodule update --init
+
+# Update
+#  git submodule update --recursive --remote
 
 cp ./src/ima.js ./playkit-js-ima/src/ima-custom.js
 cp ./src/index.js ./playkit-js-ima/src/index.js
