@@ -71,10 +71,10 @@ class CustomIma extends BaseImaPlugin {
     this.logger.debug('APS integration enabled', this.config.aps.enabled);
 
     const adTagUrl = vastUrl || this.config.adTagUrl;
-    const requestAdTagPromise = this.config.aps.requestAdTag(adTagUrl);
+    const requestAdTagPromise = this.config.requestAdTag(adTagUrl);
 
     requestAdTagPromise.then(adTagUrl => {
-      this.logger.debug('APS fetch bids resolved', adTagUrl);
+      this.logger.debug('Request ad tag resolved', adTagUrl);
       super._requestAds(adTagUrl, vastResponse);
     });
   }
