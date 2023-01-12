@@ -30,10 +30,10 @@ class CustomIma extends BaseImaPlugin {
       sizeCriteria: 'SELECT_EXACT_MATCH'
     },
     aps: {
-      enabled: false,
-      fetchBids: adTagUrl => new Promise(resolve => resolve(adTagUrl))
+      enabled: false
     },
-    adBreakPlayable: () => true
+    adBreakPlayable: () => true,
+    requestAdTag: adTagUrl => new Promise(resolve => resolve(adTagUrl))
   };
 
   /**
@@ -68,18 +68,12 @@ class CustomIma extends BaseImaPlugin {
    */
   _requestAds(vastUrl: ?string, vastResponse: ?string): void {
     this.logger.debug('Request ads', vastUrl);
+    this.logger.debug('APS integration enabled', this.config.aps.enabled);
 
-    let adTagUrl = vastUrl || this.config.adTagUrl;
+    const adTagUrl = vastUrl || this.config.adTagUrl;
+    const requestAdTagPromise = this.config.aps.requestAdTag(adTagUrl);
 
-    this.logger.debug('APS integration', this.config.aps.enabled);
-
-    let fetchBidsPromise = new Promise(resolve => resolve(adTagUrl));
-
-    if (this.config.aps.enabled && adTagUrl && 'apstag' in window) {
-      fetchBidsPromise = this.config.aps.fetchBids(adTagUrl);
-    }
-
-    fetchBidsPromise.then(adTagUrl => {
+    requestAdTagPromise.then(adTagUrl => {
       this.logger.debug('APS fetch bids resolved', adTagUrl);
       super._requestAds(adTagUrl, vastResponse);
     });
